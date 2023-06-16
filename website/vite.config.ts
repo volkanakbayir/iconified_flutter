@@ -9,7 +9,7 @@ import Vue from '@vitejs/plugin-vue'
 import WindiCSS from 'vite-plugin-windicss'
 
 export default defineConfig({
-  base: '/iconify_flutter',
+  base: '/iconified_flutter',
   plugins: [
     Vue(),
     Pages({
@@ -20,11 +20,7 @@ export default defineConfig({
     }),
     AutoImport({
       dts: true,
-      imports: [
-        'vue',
-        'vue-router',
-        '@vueuse/core',
-      ],
+      imports: ['vue', 'vue-router', '@vueuse/core'],
     }),
     PurgeIcons(),
     VitePWA({

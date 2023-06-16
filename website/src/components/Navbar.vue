@@ -24,19 +24,26 @@
             v-for="category of categories"
             :key="category"
             :value="category"
-          >{{ category.split('/')[0].trim() }}</option>
+          >
+            {{ category.split('/')[0].trim() }}
+          </option>
         </select>
       </div>
       <h1
         class="flex-auto font-light m-auto text-xl text-center py-1"
         style="letter-spacing: 2px"
-      >Iconify</h1>
-      <router-link class="flex-none my-auto mx-3 text-xl non-dragging" to="/collection/all">
+      >
+        Iconify
+      </h1>
+      <router-link
+        class="flex-none my-auto mx-3 text-xl non-dragging"
+        to="/collection/all"
+      >
         <IconButton icon="carbon:search" style="padding-bottom: 3px" />
       </router-link>
       <a
         class="flex-none my-auto mx-3 text-xl non-dragging"
-        href="https://github.com/andronasef/iconify_flutter"
+        href="https://github.com/volkanakbayir/iconified_flutter"
         target="_blank"
       >
         <IconButton icon="codicon:github" style="padding-bottom: 3px" />

@@ -1,3 +1,7 @@
+## 0.0.6
+
+- Upgrade dependencies (flutter_svg < 2.0.7)
+
 ## 0.0.5
 
 - Flutter 3.0 support

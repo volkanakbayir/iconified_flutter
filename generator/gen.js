@@ -5,9 +5,9 @@ import {
   isEmptyColor,
   parseColors,
   runSVGO,
-} from '@iconify/tools';
-import { exec } from 'child_process';
-import { promises as fs } from 'fs';
+} from "@iconify/tools";
+import { exec } from "child_process";
+import { promises as fs } from "fs";
 
 (async () => {
   // make colorful icons or not
@@ -15,19 +15,19 @@ import { promises as fs } from 'fs';
 
   //  remove old and get new one
   await execShellCommand(
-    'git clone https://github.com/iconify/icon-sets.git generator/icon-sets'
+    "git clone https://github.com/iconify/icon-sets.git generator/icon-sets"
   );
   try {
-    await fs.rm('lib/icons', { recursive: true });
+    await fs.rm("lib/icons", { recursive: true });
   } catch (e) {
-    console.log('lib/icons not found');
+    console.log("lib/icons not found");
   }
-  await fs.mkdir('lib/icons', { recursive: true });
+  await fs.mkdir("lib/icons", { recursive: true });
 
   // get colored icons list to skip them
   let makeIcons = Object.entries(
     JSON.parse(
-      await fs.readFile('generator/icon-sets/collections.json', 'utf8')
+      await fs.readFile("generator/icon-sets/collections.json", "utf8")
     )
   );
 
@@ -38,45 +38,42 @@ import { promises as fs } from 'fs';
   });
 
   // Import icons
-  const inputIconSetsPath = 'generator/icon-sets/json/';
+  const inputIconSetsPath = "generator/icon-sets/json/";
   const iconsets = await fs.readdir(inputIconSetsPath);
 
   for (const iconset of iconsets) {
     // Skip Colored Iconsets
     let makeit = false;
     makeIconsList.forEach((item) => {
-      if (item[0] == iconset.split('.')[0])
+      if (item[0] == iconset.split(".")[0])
         if (item[1] == colorful) makeit = true;
     });
     if (!makeit) {
-      console.log('skip ' + iconset);
+      console.log("skip " + iconset);
       continue;
     }
-    if (iconset == 'fluent') continue;
+    if (iconset == "fluent") continue;
 
     // Read file
     // if (iconset == "flat-color-icons.json") {
     console.log(`Building ${iconset}`);
 
-    const input = await fs.readFile(`${inputIconSetsPath}${iconset}`, 'utf8');
+    const input = await fs.readFile(`${inputIconSetsPath}${iconset}`, "utf8");
     const iconSet = new IconSet(JSON.parse(input));
     const iconSetName = iconset
-      .split('.')[0]
-      .split('-')
+      .split(".")[0]
+      .split("-")
       .map((string) => string.charAt(0).toUpperCase() + string.slice(1))
-      .join('');
-    const iconSetNameFile = iconset.split('.')[0].replace(/-/g, '_');
+      .join("");
+    const iconSetNameFile = iconset.split(".")[0].replace(/-/g, "_");
     const outputPath = `./lib/icons/${iconSetNameFile}.dart`;
 
     // make new file with (iconset name).dart (File Head)
-    fs.writeFile(
-      outputPath,
-      `///Discover all icons of this iconset at https://andronasef.ninja/iconify_flutter/collection/${iconSet.prefix} \n class ${iconSetName} {`
-    );
+    fs.writeFile(outputPath, "");
 
     // Validate, clean up, fix palette and optimise
     await iconSet.forEach(async (name, type) => {
-      if (type !== 'icon') {
+      if (type !== "icon") {
         return;
       }
 
@@ -96,7 +93,7 @@ import { promises as fs } from 'fs';
         // If icon is not monotone, remove this code
         await parseColors(svg, {
           callback: (attr, colorStr, color) => {
-            return !color || !isEmptyColor(color) ? colorStr : 'currentColor';
+            return !color || !isEmptyColor(color) ? colorStr : "currentColor";
           },
         });
 
@@ -116,13 +113,13 @@ import { promises as fs } from 'fs';
     // Export all icons (File Content) //
     const icons = []; // (put in icons file to have a list all icons)
     await iconSet.forEach(async (name) => {
-      let newName = name.replace(/\-/g, '_').toLowerCase();
+      let newName = name.replace(/\-/g, "_").toLowerCase();
       if (
         newName == iconSetName ||
         /^\W|^\d/gm.test(newName) ||
         reservedWords.includes(newName)
       )
-        newName = 'i_' + newName;
+        newName = "i_" + newName;
 
       icons.push(newName);
 
@@ -137,7 +134,7 @@ import { promises as fs } from 'fs';
     });
 
     // Add Icons List To File
-    let iconsDartArrayString = '';
+    let iconsDartArrayString = "";
     icons.forEach((icon) => {
       iconsDartArrayString += `${icon},\n`;
     });
@@ -145,7 +142,7 @@ import { promises as fs } from 'fs';
     await fs.appendFile(outputPath, iconsDartArray);
   }
   // Delete iconsets for redundency
-  await fs.rm('generator/icon-sets', { recursive: true });
+  await fs.rm("generator/icon-sets", { recursive: true });
 })();
 // }
 
@@ -161,65 +158,65 @@ function execShellCommand(cmd) {
 }
 
 const reservedWords = [
-  'assert',
-  'break',
-  'case',
-  'catch',
-  'class',
-  'const',
-  'continue',
-  'default',
-  'do',
-  'else',
-  'enum',
-  'extends',
-  'false',
-  'final',
-  'finally',
-  'for',
-  'if',
-  'in',
-  'is',
-  'new',
-  'null',
-  'rethrow',
-  'return',
-  'super',
-  'switch',
-  'this',
-  'throw',
-  'true',
-  'try',
-  'var',
-  'void',
-  'while',
-  'with',
-  'async',
-  'hide',
-  'on',
-  'show',
-  'sync',
-  'abstract',
-  'as',
-  'covariant',
-  'deferred',
-  'dynamic',
-  'export',
-  'extension',
-  'external',
-  'factory',
-  'function',
-  'get',
-  'implements',
-  'import',
-  'interface',
-  'library',
-  'mixin',
-  'operator',
-  'part',
-  'set',
-  'static',
-  'typedef',
-  'await',
-  'yield',
+  "assert",
+  "break",
+  "case",
+  "catch",
+  "class",
+  "const",
+  "continue",
+  "default",
+  "do",
+  "else",
+  "enum",
+  "extends",
+  "false",
+  "final",
+  "finally",
+  "for",
+  "if",
+  "in",
+  "is",
+  "new",
+  "null",
+  "rethrow",
+  "return",
+  "super",
+  "switch",
+  "this",
+  "throw",
+  "true",
+  "try",
+  "var",
+  "void",
+  "while",
+  "with",
+  "async",
+  "hide",
+  "on",
+  "show",
+  "sync",
+  "abstract",
+  "as",
+  "covariant",
+  "deferred",
+  "dynamic",
+  "export",
+  "extension",
+  "external",
+  "factory",
+  "function",
+  "get",
+  "implements",
+  "import",
+  "interface",
+  "library",
+  "mixin",
+  "operator",
+  "part",
+  "set",
+  "static",
+  "typedef",
+  "await",
+  "yield",
 ];
